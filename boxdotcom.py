@@ -8,24 +8,29 @@ from parser_xml import MyParser
 import requests
 
 class BoxDotCom:
-    url = 'https://www.box.net/api/1.0/rest?%s'
+    service_url = 'https://www.box.net/api/1.0/rest?%s'
 
     def __init__(self, api_key):
         self.api_key = api_key
         
     def getTicket(self):
+        parser = MyParser()
         complement = 'action=get_ticket&api_key=%s' % self.api_key
-        getTicket = self.url % complement
-        result = requests.get(getTicket)
-        a = MyParser()
-        a.parse(result.text)
-        return result.text
+        request_url = self.service_url % complement
+        result = requests.get(request_url)
+        self.ticket = parser.getTicket(result.text)
+        return self.ticket
     
     def login(self):
-        pass
+        self.getTicket()
+        parser = MyParser()
+        complement = 'action=get_auth_token&api_key=%s&ticket=%s' % (self.api_key, self.ticket)
+        request_url = self.service_url % complement
+        result = requests.get(request_url)
+        self.auth_token = parser.getAuthToken(result.text)
     
     def logout(self):
-        pass
+        self.ticket = None
     
     def get_account_info(self):
         pass
@@ -33,4 +38,4 @@ class BoxDotCom:
     
 api_key = '20c7b3zjjt5g66ermxiarf35lcs24pcz'
 test = BoxDotCom(api_key)
-test.getTicket()
+print test.login()
