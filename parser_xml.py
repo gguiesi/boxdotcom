@@ -4,7 +4,8 @@ Created on Apr 4, 2012
 
 @author: geraldo
 '''
-from xml.dom.minidom import parse, parseString
+from xml.dom.minidom import parseString
+
 
 class MyParser:
     

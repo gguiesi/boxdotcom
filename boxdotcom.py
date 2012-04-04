@@ -7,7 +7,6 @@ Created on Apr 4, 2012
 from parser_xml import MyParser
 import requests
 
-
 class BoxDotCom:
     url = 'https://www.box.net/api/1.0/rest?%s'
 
