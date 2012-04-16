@@ -27,4 +27,5 @@ class MyParser:
     def getAuthToken(self, result):
         dom = parseString(result)
         auth_token = self.getText((dom.getElementsByTagName('auth_token')[0]).childNodes)
+#        auth_token = '93cez9rvhrdpffciotztocx1fpsp7z3f'
         return auth_token
