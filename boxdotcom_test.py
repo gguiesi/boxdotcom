@@ -21,7 +21,11 @@ class Test(unittest.TestCase):
 
 
     def testName(self):
+        print 'passou'
         pass
+    
+    def test_validate_ticket(self):
+        self.box.validateTicket()
 
 
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ class BoxDotCom:
         request_url = self.service_url % complement
         result = requests.get(request_url)
         self.ticket = parser.getTicket(result.text)
-        print 'ticket: %s' % self.ticket
+#        print 'ticket: %s' % self.ticket
         return self.ticket
     
     '''
