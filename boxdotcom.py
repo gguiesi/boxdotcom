@@ -14,7 +14,7 @@ class BoxDotCom:
     api_key = '20c7b3zjjt5g66ermxiarf35lcs24pcz'
     auth_token = None
     
-    def __init__(self, api_key):
+    def __init__(self, api_key=api_key):
         self.api_key = api_key
     
     '''
@@ -30,7 +30,9 @@ class BoxDotCom:
         print 'ticket: %s' % self.ticket
         return self.ticket
     
-    # Deve ser usado o serviço: http://developers.box.net/w/page/12923930/ApiFunction_get_auth_token#REST
+    '''
+    Recupera o auth_token do box
+    '''
     def get_auth_token(self):
         parser = MyParser()
 #        if self.ticket == None:
@@ -43,17 +45,34 @@ class BoxDotCom:
         self.auth_token = parser.getAuthToken(result.text)
         return self.auth_token
     
+    '''
+    Efetua o logout da aplicação
+    '''
     def logout(self):
         self.ticket = None
     
+    '''
+    Recupera a árvore de arquivos do box
+    '''
     def get_account_tree(self, api_key=api_key, auth_token=auth_token, folder_id=0, params='onelevel'):
         url = '%saction=get_account_tree&api_key=%s&auth_token=%s&folder_id=%s&params=%s' % (self.service_url, api_key, auth_token, folder_id, params)
         result = requests.get(url)
         return result.text
     
+    '''
+    Abre o browser e valida o ticket
+    '''
     def validateTicket(self):
         url = 'https://www.box.net/api/1.0/auth/%s' % self.ticket
         os.system('/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args %s' % url)
+    
+    '''
+    cria um pasta
+    '''
+    def create_folder(self, api_key=api_key, auth_token=auth_token, parent_id=0, name='new folder', share=0):
+        url = '%saction=create_folder&api_key=%s&auth_token=%s&parent_id=%s&name=%s&share=%s' % (api_key, auth_token, parent_id, name, share)
+        result = requests.get(url)
+        return result.text
     
 #api_key = '20c7b3zjjt5g66ermxiarf35lcs24pcz'
 #test = BoxDotCom(api_key)
